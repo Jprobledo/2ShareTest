@@ -1,0 +1,92 @@
+﻿@model IEnumerable<ShopCommon.MdProducts.Product>
+
+@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Productos</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdProduct)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NameProduct)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdProduct)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameProduct)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            <button class="btn btn-success btn-xs addproduct" id=@item.IdProduct title="Adicionar"><i class="glyphicon glyphicon-plus"></i></button>
+        </td>
+    </tr>
+}
+
+</table>
+
+<script>    
+    $(document).ready(function () {
+        addProductFromGroceryList();
+    });
+
+    function addProductFromGroceryList() {
+        $('.addproduct').attr('href', 'javascript://');
+        $('.addproduct').click(function () {
+            $.row_index = $(this).parent().parent();
+            var _idProduct = $(this).attr('id');
+
+            var $dialog = BootstrapDialog.show({
+                title: 'Agregar Producto de la lista',
+                message: 'Se Agregará el producto seleccionado. Desea Continuar?',
+                buttons: [{
+                    label: 'Continuar',
+                    action: function (dialog) {
+                        $.ajax({
+                            url: "/api/GroceryApi?idProducto=" + _idProduct,
+                            type: "POST",
+                            success: function (data) {
+                                if (data !== "") {
+                                    $.row_index.remove();
+                                    window.location.replace("/Home");
+                                }
+                            },
+                            error: function () {
+                                BootstrapDialog.alert("Error al adicionar el registro", "Error");
+                            }
+                        });
+                        dialog.close();
+                    }
+                }, {
+                    label: 'Cancelar',
+                    action: function (dialog) {
+                        dialog.close();
+                    }
+                }]
+            });
+        });
+    }
+</script>
+
+

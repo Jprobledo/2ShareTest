@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ShopCommon.MdProducts.GroceryList>
+
+@{
+    ViewBag.Title = "Grocery List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Grocery List</h2>
+
+<p>
+    @Html.ActionLink("Add Product", "ListProducts")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameProduct)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tag)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(model => item.NameProduct)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.Cod)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.Price)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Tag)*@
+            @*<button class="btn btn-danger btn-xs TagProduct" id=@item.idProducto title="Marcar"><i class="glyphicon glyphicon-tags"></i></button>*@
+            <input class="btn btn-success TagProduct" type="checkbox" id=@item.idProducto autocomplete="off" checked=@item.Tag>            
+        </td>
+        <td>
+            <button class="btn btn-danger btn-xs delete" id=@item.idProducto title="Eliminar"><i class="glyphicon glyphicon-trash"></i></button>
+        </td>
+    </tr>
+    }
+
+</table>
+
+<script>
+    $(document).ready(function () {
+        DelProductFromGroceryList();
+        TagProductFromGroceryList();
+    });
+
+    function DelProductFromGroceryList() {
+        $('.delete').attr('href', 'javascript://');
+        $('.delete').click(function () {
+            $.row_index = $(this).parent().parent();            
+            var _idProducto = $(this).attr('id');
+
+            var $dialog = BootstrapDialog.show({
+                title: 'Eliminar Producto de la lista',
+                message: 'Se eleminará el registro seleccionado. Desea Continuar?',
+                buttons: [{
+                    label: 'Continuar',
+                    action: function (dialog) {
+                        $.ajax({
+                            url: "/api/GroceryApi?idProducto=" + _idProducto,
+                            type: "DELETE",
+                            success: function (data) {                                
+                                if (data !== "") {
+                                    $.row_index.remove();
+                                    return BootstrapDialog.alert("El registro ha sido eliminado", "Información");
+                                }                                
+                            },
+                            error: function () {
+                                BootstrapDialog.alert("Error al eliminar el registro", "Información");
+                            }
+                        });
+                        dialog.close();
+                    }
+                }, {
+                    label: 'Cancelar',
+                    action: function (dialog) {
+                        dialog.close();
+                    }
+                }]
+            });
+        });
+    }
+
+    function TagProductFromGroceryList() {
+        $('.TagProduct').attr('href', 'javascript://');
+        $('.TagProduct').click(function () {            
+            var _IdProducto = $(this).attr('id');
+            $.ajax({
+                url: "/api/GroceryApi/TagProduct/" + _IdProducto,
+                type: "POST",
+                success: function (data) {
+                    if (data !== "") {
+                        return BootstrapDialog.alert("El cambio ha sido guardado", "Operación Exitosa");
+                    }
+                },
+                error: function () {
+                    BootstrapDialog.alert("Error al cambiar el tag", "Error");
+                }
+            });            
+        });
+    }
+
+</script>
