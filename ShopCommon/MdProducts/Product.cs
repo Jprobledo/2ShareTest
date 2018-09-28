@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShopCommon.MdProducts
 {
+    /// <summary>
+    /// Modelo de producto
+    /// </summary>
     public class Product
     {
         public int IdProduct { get; set; }

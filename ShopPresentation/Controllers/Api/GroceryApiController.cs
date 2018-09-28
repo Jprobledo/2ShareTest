@@ -14,9 +14,17 @@ namespace ShopPresentation.Controllers.Api
         // GET: api/GroceryApi
         public IEnumerable<Product> Get()
         {
-            GroceryListBLL objGroceryListBll = new GroceryListBLL();
-            var lstGroceryList = objGroceryListBll.ListProducts();
-            return lstGroceryList;
+            try
+            {
+                GroceryListBLL objGroceryListBll = new GroceryListBLL();
+                var lstGroceryList = objGroceryListBll.ListProducts();
+                return lstGroceryList;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // GET: api/GroceryApi/5
