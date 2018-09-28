@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<ShopCommon.MdProducts.Product>
 
 @{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Available products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Productos</h2>
+<h2>Available products</h2>
 
 <table class="table">
     <tr>
@@ -50,7 +50,7 @@
     $(document).ready(function () {
         addProductFromGroceryList();
     });
-
+    //Funcion para agregar producto a la Grocery List.
     function addProductFromGroceryList() {
         $('.addproduct').attr('href', 'javascript://');
         $('.addproduct').click(function () {
@@ -58,10 +58,10 @@
             var _idProduct = $(this).attr('id');
 
             var $dialog = BootstrapDialog.show({
-                title: 'Agregar Producto de la lista',
-                message: 'Se Agregará el producto seleccionado. Desea Continuar?',
+                title: 'Add product to grocery list',
+                message: 'This product will be added to the grocery list. Are you sure?',
                 buttons: [{
-                    label: 'Continuar',
+                    label: 'Ok',
                     action: function (dialog) {
                         $.ajax({
                             url: "/api/GroceryApi?idProducto=" + _idProduct,
@@ -73,13 +73,13 @@
                                 }
                             },
                             error: function () {
-                                BootstrapDialog.alert("Error al adicionar el registro", "Error");
+                                BootstrapDialog.alert("Error adding the product");
                             }
                         });
                         dialog.close();
                     }
                 }, {
-                    label: 'Cancelar',
+                    label: 'Cancel',
                     action: function (dialog) {
                         dialog.close();
                     }

@@ -9,9 +9,13 @@ namespace ShopCommon.MdProducts
     public class GroceryList
     {
         public int idProducto { get; set; }
+
         public bool Tag { get; set; }
+
         public string NameProduct { get; set; }
+
         public int Cod { get; set; }
+
         public int Price { get; set; }
     }
 }

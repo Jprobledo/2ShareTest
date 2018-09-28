@@ -11,6 +11,7 @@ namespace ShopDAL
 {
     public static class DbConection
     {
+        //Conexion con la Base de Datos llamando la ConnectionString de webconfig
         private static string conn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
         public static IDbConnection Conexion()

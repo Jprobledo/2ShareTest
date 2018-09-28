@@ -38,7 +38,7 @@ namespace ShopDAL
 
         #region [Listar Productos Personales]
         /// <summary>
-        /// Método para mostrar los productos de la lista personal
+        /// Método para mostrar los productos en la Grocery List
         /// </summary>
         /// <returns>Una lista de los productos que hay en la BD en la tabla personal</returns>
         public List<GroceryList> GroceryList()
@@ -74,7 +74,7 @@ namespace ShopDAL
 
         #region [Listar Productos en General]
         /// <summary>
-        /// Método para mostrar los productos de la lista general
+        /// Método para mostrar los productos de la lista de productos
         /// </summary>
         /// <returns>Una lista de todos los productos que hay en la BD</returns>
         public List<Product> ListProducts()
@@ -109,7 +109,7 @@ namespace ShopDAL
 
         #region [Eliminar Productos de la pista personal]
         /// <summary>
-        /// Método para eliminar productos de lista de productos personal
+        /// Método para eliminar productos de Grocery List
         /// </summary>
         /// <param name="IdProduct">Campo que se quiere eliminar</param>
         /// <returns>El resultado del Query</returns>

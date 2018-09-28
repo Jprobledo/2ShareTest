@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="DbConection.cs" />
     <Compile Include="GroceryListDAL.cs" />
-    <Compile Include="ProductsDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
