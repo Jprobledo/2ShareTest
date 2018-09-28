@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShopCommon.MdProducts
 {
+    /// <summary>
+    /// Modelo de la GroceryList
+    /// </summary>
     public class GroceryList
     {
         public int idProducto { get; set; }
